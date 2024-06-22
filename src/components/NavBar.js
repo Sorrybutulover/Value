@@ -1,21 +1,19 @@
-import React from 'react'
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import '../css/nav.css'
-import border from '../images/menu-border.png'
+import '../css/nav.css';
+import border from '../images/menu-border.png';
 import { useState, useEffect } from 'react';
 
 import { Icon24LogoVk } from '@vkontakte/icons';
 import { Icon24Location } from '@vkontakte/icons';
 
-
 function NavBar() {
   const location = useLocation();
   const isStart = location.pathname === '/';
-  const isAbout = location.pathname === '/about'
-  const isContact = location.pathname === '/comand'
-  const isAuth = location.pathname === '/auth'
-  const isProducts = location.pathname === '/products'
-  const isLisenses = location.pathname === '/blog'
+  const isAbout = location.pathname === '/about';
+  const isContact = location.pathname === '/comand';
+  const isProducts = location.pathname === '/products';
+  const isLisenses = location.pathname === '/blog';
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,19 +23,17 @@ function NavBar() {
 
   let prevScrollpos = window.scrollY;
 
-  window.onscroll = function() {
+  window.onscroll = function () {
     let currentScrollPos = window.scrollY;
     if (prevScrollpos > currentScrollPos) {
       document.getElementById("scroll-header").style.top = "0";
-      document.getElementById("navbar").style.top = "45px"; 
-
+      document.getElementById("navbar").style.top = "45px";
     } else {
-      document.getElementById("navbar").style.top = "0"; 
-      document.getElementById("scroll-header").style.top = "-200px";  
-  
+      document.getElementById("navbar").style.top = "0";
+      document.getElementById("scroll-header").style.top = "-200px";
     }
     prevScrollpos = currentScrollPos;
-  }
+  };
 
   // Определение состояний
   const [isAuth1, setIsAuth] = useState(false);
@@ -46,48 +42,46 @@ function NavBar() {
   const [meetId, setMeetId] = useState('');
   const [isDataEntered, setIsDataEntered] = useState(false);
 
-
-    // Обработчик клика по ссылке "Авторизация"
-    const handleAuthClick = (e) => {
-      e.preventDefault(); // Предотвращает переход по ссылке
-      setIsModalOpen(true); // Открывает модальное окно
+  // Обработчик клика по ссылке "Авторизация"
+  const handleAuthClick = (e) => {
+    e.preventDefault(); // Предотвращает переход по ссылке
+    setIsModalOpen(true); // Открывает модальное окно
   };
 
   // Обработчик закрытия модального окна
   const handleCloseModal = () => {
-      setIsModalOpen(false); // Закрывает модальное окно
+    setIsModalOpen(false); // Закрывает модальное окно
   };
 
   // Обработчик изменения данных
   const handleInputChange = (setter) => (e) => {
-      setter(e.target.value);
+    setter(e.target.value);
   };
 
   // Обработчик логина
   const handleLogin = () => {
-      // Сохраняет введенные данные в локальное хранилище
-      localStorage.setItem('trackerId', trackerId);
-      localStorage.setItem('meetId', meetId);
-      setIsModalOpen(false); // Закрывает модальное окно
-      // Проверяет, введены ли данные
-      if (trackerId || meetId) {
-          setIsDataEntered(true);
-      } else {
-          setIsDataEntered(false);
-      }
+    // Сохраняет введенные данные в локальное хранилище
+    localStorage.setItem('trackerId', trackerId);
+    localStorage.setItem('meetId', meetId);
+    setIsModalOpen(false); // Закрывает модальное окно
+    // Проверяет, введены ли данные
+    if (trackerId || meetId) {
+      setIsDataEntered(true);
+    } else {
+      setIsDataEntered(false);
+    }
   };
 
   // Проверка наличия данных в локальном хранилище при монтировании компонента
   useEffect(() => {
-      const storedTrackerId = localStorage.getItem('trackerId');
-      const storedMeetId = localStorage.getItem('meetId');
-      if (storedTrackerId && storedMeetId) {
-          setTrackerId(storedTrackerId);
-          setMeetId(storedMeetId);
-          setIsDataEntered(true);
-      }
+    const storedTrackerId = localStorage.getItem('trackerId');
+    const storedMeetId = localStorage.getItem('meetId');
+    if (storedTrackerId && storedMeetId) {
+      setTrackerId(storedTrackerId);
+      setMeetId(storedMeetId);
+      setIsDataEntered(true);
+    }
   }, []);
-
 
   return (
     <>
@@ -153,10 +147,9 @@ function NavBar() {
         </div>
         <nav className="navbar" id="navbar">
           <ul className="navbar-list" id="primary-navbar" data-visiable="false">
-            <li
-              className={`${isStart ? "navbar-punkt-active" : "navbar-punkt"}`}>
+            <li className={`${isStart ? "navbar-punkt-active" : "navbar-punkt"}`}>
               <a href="/" className="navbar-links">
-              Главная
+                Главная
               </a>
             </li>
 
@@ -174,73 +167,88 @@ function NavBar() {
             </li>
 
             <li className={`${isAuth1 ? "navbar-punkt-active" : "navbar-punkt"}`}>
-              <a href="#" 
-              className={`navbar-links ${isDataEntered ? 'data-entered' : 'data-not-entered'}`} 
-              onClick={handleAuthClick}>Авторизация</a>
+              <a href="#"
+                className={`navbar-links ${isDataEntered ? 'data-entered' : 'data-not-entered'}`}
+                onClick={handleAuthClick}>Авторизация</a>
             </li>
           </ul>
           {isModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={handleCloseModal}>&times;</span>
-                        <h2>Авторизация</h2>
-                        <div>
-                            <label>
-                                Яндекс.Трекер ID:
-                                <input type="text" value={trackerId} onChange={(e) => setTrackerId(e.target.value)} />
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                Google Meet ID:
-                                <input type="text" value={meetId} onChange={(e) => setMeetId(e.target.value)} />
-                            </label>
-                        </div>
-                        <button onClick={handleLogin}>Войти</button>
-                    </div>
+            <div className="modal">
+              <div className="modal-content">
+                <span className="close" onClick={handleCloseModal}>&times;</span>
+                <p className='autoriz'>Авторизация</p>
+                <div>
+                  <label>
+                    Яндекс.Трекер ID:
+                    <input type="text" value={trackerId} onChange={(e) => setTrackerId(e.target.value)} />
+                  </label>
                 </div>
-            )}
+                <div>
+                  <label>
+                    Google Meet ID:
+                    <input type="text" value={meetId} onChange={(e) => setMeetId(e.target.value)} />
+                  </label>
+                </div>
+                <button onClick={handleLogin}>Войти</button>
+              </div>
+            </div>
+          )}
         </nav>
       </header>
 
       <div className="toggle-item">
-        <a className="toggle-click" onClick={toggleMenu}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="40"
-            height="40"
-            fillRule="currentColor"
-            className="bi bi-list-ul"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
-            />
-          </svg>
+        <a className={`toggle-click ${isOpen ? 'open' : ''}`} onClick={toggleMenu}>
+          <div className={`hamburger-lines ${isOpen ? 'open' : ''}`}>
+            <span className="line line1"></span>
+            <span className="line line2"></span>
+            <span className="line line3"></span>
+          </div>
         </a>
       </div>
-            
+
       {isOpen && (
         <div className="dropdown-menu-toggle">
           <ul className="dropdown-menu">
-            <li className={`${isStart ? "dropdown-punkt-active" : "dropdown-punkt"}`}>
+            <li className={`${isStart ? "dropdown-punkt active" : "dropdown-punkt"}`}>
               <a href="/" className="dropdown-links">Главная</a>
             </li>
-            <li className={`${isAbout ? "dropdown-punkt-active" : "dropdown-punkt"}`}>
+            <li className={`${isAbout ? "dropdown-punkt active" : "dropdown-punkt"}`}>
               <a href="/about" className="dropdown-links">О нас</a>
             </li>
-            <li className={`${isContact ? "dropdown-punkt-active" : "dropdown-punkt"}`}>
+            <li className={`${isContact ? "dropdown-punkt active" : "dropdown-punkt"}`}>
               <a href="/comand" className="dropdown-links">Команда</a>
             </li>
-            <li className={`${isAuth1 ? "dropdown-punkt-active" : "dropdown-punkt"}`}>
-              <a href="#" className={`dropdown-links ${isDataEntered ? 'data-entered' : 'data-not-entered'}`} onClick={handleAuthClick}>Авторизация</a>
+            <li className={`${isAuth1 ? "dropdown-punkt active" : "dropdown-punkt"}`}>
+              <a href="#"
+                className={`dropdown-links ${isDataEntered ? 'data-entered' : 'data-not-entered'}`}
+                onClick={handleAuthClick}>Авторизация</a>
             </li>
           </ul>
+          {isModalOpen && (
+            <div className="modal">
+              <div className="modal-content">
+                <span className="close" onClick={handleCloseModal}>&times;</span>
+                <p className='autoriz'>Авторизация</p>
+                <div>
+                  <label>
+                    Яндекс.Трекер ID:
+                    <input type="text" value={trackerId} onChange={(e) => setTrackerId(e.target.value)} />
+                  </label>
+                </div>
+                <div>
+                  <label> 
+                    Google Meet ID:
+                    <input type="text" value={meetId} onChange={(e) => setMeetId(e.target.value)} />
+                  </label>
+                </div>
+                <button onClick={handleLogin}>Войти</button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>
   );
 }
 
-export default NavBar
+export default NavBar;
