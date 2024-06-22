@@ -50,3 +50,6 @@ function App() {
 }
 
 export default App;
+
+
+// https://docs.google.com/spreadsheets/d/1NCRRqE-4rxsnPUCvDGinwVqX_sOZ-m2XXRbUCezMme4/edit?gid=0#gid=0

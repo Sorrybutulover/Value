@@ -1,4 +1,4 @@
-.main-cont{
+.main-cont {
     margin-top: 7rem;
     min-height: 100vh;
     background-color: #ffffff;
@@ -6,29 +6,57 @@
     border-radius: 2rem;
     padding: 4rem;
 }
-.message-cont-left{
+
+.message-cont-left {
     display: flex;
+    justify-content: flex-start; /* Исправлено на flex-start */
+    margin-bottom: 1rem;
 }
-.message-left{
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+
+.message-cont-right {
+    display: flex;
+    justify-content: flex-end; /* Исправлено на flex-end */
+    margin-bottom: 1rem;
+}
+
+.message-left, .message-right {
+    border-radius: 20px;
     background-color: #cbb8ff;
     padding: 10px;
     color: white;
     font-size: 1.2rem;
-}
-.message-cont-right{
-    display: flex;
-    justify-content: right;
-}
-.message-right{
-    font-size: 1.2rem;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    background-color: #cbb8ff;
-    padding: 10px;
-    color: white;
     max-width: 720px;
+}
+
+.feedback-section {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.feedback-input {
+    flex-grow: 1;
+    margin-right: 10px;
+    font-size: 19.2px;
+    height: 100px; /* Увеличиваем высоту textarea */
+    border-radius: 10px; /* Скругляем углы */
+    padding: 10px; /* Добавляем внутренний отступ */
+}
+
+.feedback-button {
+    flex-shrink: 0;
+}
+
+.modal-input {
+    margin-bottom: 15px;
+}
+
+.modal-content {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+.modal-header,
+.modal-footer {
+    border: none;
 }
